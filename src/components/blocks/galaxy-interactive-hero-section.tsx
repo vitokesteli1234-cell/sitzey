@@ -2,8 +2,22 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Suspense, lazy } from 'react'
+import { Space_Grotesk } from 'next/font/google'
 import { StoryAndWorkSection } from '@/components/blocks/sitzey-story-and-work'
+import { Magnetic } from '@/components/blocks/magnetic'
+import { useIntroReady } from '@/components/blocks/intro-context'
 const Spline = lazy(() => import('@splinetool/react-spline'))
+
+// Geometric, slightly technical sans for the hero's supporting copy —
+// distinct from the SITZEY wordmark's own gradient treatment, and matches
+// the display font used by the sitzey-website reference this hero mirrors.
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+})
+
+const EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)'
+const EASE_OUT_BACK = 'cubic-bezier(0.34, 1.56, 0.64, 1)'
 
 
 function HeroSplineBackground() {
@@ -58,26 +72,64 @@ function HeroSplineBackground() {
 }
 
 function HeroContent() {
+  const ready = useIntroReady();
+  const playState = ready ? "running" : "paused";
+
   return (
     <div className="text-left text-white pt-16 sm:pt-24 md:pt-32 px-4 max-w-3xl">
+      <div className="relative isolate mb-6 inline-block sm:mb-8">
+        <div
+          className="pointer-events-none absolute -inset-x-10 -inset-y-12 -z-10 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(ellipse 65% 70% at 32% 50%, rgba(232,121,249,0.55), transparent 70%)",
+            animation: "glow-pulse 4s ease-in-out infinite",
+          }}
+          aria-hidden="true"
+        />
+        <div
+          className="rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-3 backdrop-blur-sm sm:px-8 sm:py-3.5 md:px-10 md:py-4"
+          style={{
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+            opacity: 0,
+            animation: `pop-in 0.9s ${EASE_OUT_BACK} forwards`,
+            animationPlayState: playState,
+          }}
+        >
+          <p
+            className="text-4xl font-black uppercase tracking-[0.35em] text-transparent sm:text-6xl md:text-7xl"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, #f5d0fe, #e879f9, #c084fc, #a78bfa)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextStroke: "1px rgba(255,255,255,0.18)",
+              filter:
+                "drop-shadow(0 0 28px rgba(232,121,249,0.9)) drop-shadow(0 0 60px rgba(168,85,247,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
+            }}
+          >
+            SITZEY
+          </p>
+        </div>
+      </div>
       <p
-        className="mb-4 text-4xl font-black uppercase tracking-[0.35em] text-transparent sm:mb-6 sm:text-6xl md:text-7xl"
+        className={`${spaceGrotesk.className} mb-3 text-xs font-medium uppercase tracking-[0.25em] text-gray-300 sm:text-sm`}
         style={{
-          backgroundImage:
-            "linear-gradient(90deg, #6b21a8, #86198f, #4c1d95)",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          WebkitTextStroke: "1.5px rgba(0,0,0,0.6)",
-          filter:
-            "drop-shadow(0 0 22px rgba(88,28,135,0.9)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
+          opacity: 0,
+          animation: `fade-in-up 0.8s ${EASE_OUT} forwards 0.16s`,
+          animationPlayState: playState,
         }}
       >
-        SITZEY
-      </p>
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-gray-300 sm:text-sm">
         Website design &amp; development studio for small businesses
       </p>
-      <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-wide">
+      <h1
+        className={`${spaceGrotesk.className} text-3xl sm:text-5xl md:text-7xl font-semibold mb-4 leading-tight tracking-wide`}
+        style={{
+          opacity: 0,
+          animation: `fade-in-up 0.9s ${EASE_OUT} forwards 0.3s`,
+          animationPlayState: playState,
+        }}
+      >
         We build websites <br className="sm:hidden" />for businesses<br className="sm:hidden" /> that want to stand out.
       </h1>
     </div>
@@ -91,12 +143,14 @@ function Navbar() {
       style={{ backgroundColor: 'rgba(13, 13, 24, 0.3)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: '0 0 15px 15px' }}
     >
       <div className="container mx-auto px-4 py-4 md:px-6 lg:px-8 flex items-center justify-end">
-        <a
-          href="/contact"
-          className="rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg"
-        >
-          Contact
-        </a>
+        <Magnetic className="inline-block">
+          <a
+            href="/contact"
+            className={`${spaceGrotesk.className} rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg`}
+          >
+            Contact
+          </a>
+        </Magnetic>
       </div>
     </nav>
   );

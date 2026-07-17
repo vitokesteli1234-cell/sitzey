@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -140,6 +140,21 @@
   }
 }
 
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.82);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes glow-pulse {
   0%, 100% {
     opacity: 0.55;
@@ -166,6 +181,12 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes blink-cursor {
+  50% {
+    opacity: 0;
   }
 }
 
