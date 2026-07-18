@@ -4,8 +4,12 @@ import React, { useEffect, useRef } from 'react';
 import { Suspense, lazy } from 'react'
 import { Space_Grotesk } from 'next/font/google'
 import { StoryAndWorkSection } from '@/components/blocks/sitzey-story-and-work'
+import { WhyWebsiteSection } from '@/components/blocks/why-website-section'
+import { ServicesSection } from '@/components/blocks/services-section'
+import { ProcessSection } from '@/components/blocks/process-section'
 import { Magnetic } from '@/components/blocks/magnetic'
 import { useIntroReady } from '@/components/blocks/intro-context'
+import { scrollToElementCentered } from '@/components/blocks/smooth-scroll'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 // Geometric, slightly technical sans for the hero's supporting copy —
@@ -18,6 +22,12 @@ const spaceGrotesk = Space_Grotesk({
 
 const EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)'
 const EASE_OUT_BACK = 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+
+const NAV_LINKS = [
+  { href: '#why', label: 'Why' },
+  { href: '#services', label: 'Services' },
+  { href: '#process', label: 'Process' },
+]
 
 
 function HeroSplineBackground() {
@@ -136,21 +146,52 @@ function HeroContent() {
   );
 }
 
+function handleSectionNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  e.preventDefault();
+  const id = href.replace('#', '');
+  scrollToElementCentered(id);
+  history.pushState(null, '', href);
+}
+
 function Navbar() {
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-20"
       style={{ backgroundColor: 'rgba(13, 13, 24, 0.3)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: '0 0 15px 15px' }}
     >
-      <div className="container mx-auto px-4 py-4 md:px-6 lg:px-8 flex items-center justify-end">
+      <div className="container mx-auto flex items-center justify-between gap-8 px-4 py-4 md:px-6 lg:px-8">
         <Magnetic className="inline-block">
           <a
-            href="/contact"
-            className={`${spaceGrotesk.className} rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg`}
+            href="#top"
+            className="text-sm font-bold uppercase tracking-[0.3em] text-purple-300 transition hover:text-white"
+            style={{ filter: "drop-shadow(0 0 10px rgba(192,132,252,0.6))" }}
           >
-            Contact
+            SITZEY
           </a>
         </Magnetic>
+
+        <div className="flex items-center gap-8">
+          <div className={`${spaceGrotesk.className} hidden items-center gap-7 sm:flex`}>
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionNavClick(e, link.href)}
+                className="relative text-sm font-medium text-gray-300 transition duration-200 hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-purple-400 after:transition-all after:duration-300 hover:after:w-full"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <Magnetic className="inline-block">
+            <a
+              href="/contact"
+              className={`${spaceGrotesk.className} rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg`}
+            >
+              Contact
+            </a>
+          </Magnetic>
+        </div>
       </div>
     </nav>
   );
@@ -177,7 +218,7 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative">
+    <div id="top" className="relative">
       <Navbar />
 
       <div className="relative min-h-screen">
@@ -196,6 +237,9 @@ export const HeroSection = () => {
       </div>
 
       <StoryAndWorkSection />
+      <WhyWebsiteSection />
+      <ServicesSection />
+      <ProcessSection />
     </div>
   );
 };

@@ -2,6 +2,12 @@
 
 import { Reveal } from "@/components/blocks/scroll-reveal";
 
+const STATS = [
+  { value: "100%", label: "Hand-coded" },
+  { value: "72HR", label: "Avg. Turnaround" },
+  { value: "98", label: "Lighthouse Score" },
+];
+
 export function StoryAndWorkSection() {
   return (
     <div className="relative overflow-hidden bg-black py-24 text-white sm:py-32">
@@ -36,53 +42,25 @@ export function StoryAndWorkSection() {
         />
       </div>
 
-      {/* STORY */}
+      {/* STATS */}
       <section className="relative z-10 container mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
-        <Reveal>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-purple-300">
-            {"// The Story"}
-          </p>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <h2 className="mb-8 text-3xl font-bold leading-tight tracking-wide sm:text-4xl md:text-5xl">
-            Built out of spite for boring websites.
-          </h2>
-        </Reveal>
-
-        <Reveal delay={0.16}>
-          <div className="space-y-5 text-base leading-relaxed text-gray-300 sm:text-lg">
-            <p>
-              Sitzey started in a cramped apartment with one laptop, too much
-              coffee, and a deep, personal hatred for template-looking
-              websites that all felt the same.
-            </p>
-            <p>
-              What began as freelance favors for friends turned into a
-              one-person studio obsessed with a simple idea: a website should
-              feel like the brand it represents, not like it was assembled
-              from the same twelve blocks as everyone else&apos;s.
-            </p>
-            <p>
-              Every project since has followed the same rule — design it like
-              it matters, build it like it has to last, and never ship
-              something boring.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.24}>
-          <div className="mt-12 border-t border-white/10 pt-10 text-center sm:text-left">
-            <div
-              className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-6xl font-bold text-transparent sm:text-7xl md:text-8xl"
-              style={{ filter: "drop-shadow(0 0 28px rgba(192,132,252,0.35))" }}
-            >
-              100%
-            </div>
-            <div className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500 sm:text-base">
-              Hand-coded
-            </div>
-          </div>
-        </Reveal>
+        <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-3 sm:gap-6 sm:text-left">
+          {STATS.map((stat, i) => (
+            <Reveal key={stat.label} delay={0.1 * i}>
+              <div>
+                <div
+                  className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-5xl font-bold text-transparent sm:text-6xl md:text-7xl"
+                  style={{ filter: "drop-shadow(0 0 28px rgba(192,132,252,0.35))" }}
+                >
+                  {stat.value}
+                </div>
+                <div className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500 sm:text-base">
+                  {stat.label}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </section>
     </div>
   );
