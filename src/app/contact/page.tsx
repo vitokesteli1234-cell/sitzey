@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
+    <div className="relative min-h-screen w-full overflow-hidden text-white">
       <CursorGlitch />
 
       {/* Animated background glow, matching the hero's palette */}

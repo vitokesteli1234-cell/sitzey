@@ -10,7 +10,7 @@ const STATS = [
 
 export function StoryAndWorkSection() {
   return (
-    <div className="relative overflow-hidden bg-black py-24 text-white sm:py-32">
+    <div className="relative overflow-hidden py-24 text-white sm:py-32">
       {/* Ambient glow, matching hero/contact palette. The seam glow is
           anchored right at the top edge (not offset/clipped) so the hero's
           fading nebula color continues straight into this section instead

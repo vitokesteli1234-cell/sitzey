@@ -14,7 +14,7 @@ const SERVICE_PLANS: PricingPlan[] = [
   {
     name: "Starter Site",
     icon: <LayoutTemplate className="h-5 w-5" strokeWidth={1.75} />,
-    price: "from €100",
+    price: "€300–500",
     description:
       "A clean, fast site with everything a small business actually needs — who you are, what you do, and how to reach you.",
     buttonText: "Ask about your project",
@@ -23,7 +23,7 @@ const SERVICE_PLANS: PricingPlan[] = [
   {
     name: "Online Store",
     icon: <ShoppingCart className="h-5 w-5" strokeWidth={1.75} />,
-    price: "from €400",
+    price: "€900–1,800",
     description:
       "A full storefront: product listings, a cart, and card payments wired in from day one.",
     buttonText: "Ask about your project",
@@ -32,7 +32,7 @@ const SERVICE_PLANS: PricingPlan[] = [
   {
     name: "Booking System",
     icon: <CalendarClock className="h-5 w-5" strokeWidth={1.75} />,
-    price: "from €300",
+    price: "€700–1,200",
     description:
       "For salons, rentals, and restaurants — a live calendar so people book themselves, no phone tag required.",
     buttonText: "Ask about your project",
@@ -41,7 +41,7 @@ const SERVICE_PLANS: PricingPlan[] = [
   {
     name: "Landing Page",
     icon: <Target className="h-5 w-5" strokeWidth={1.75} />,
-    price: "from €150",
+    price: "€250–400",
     description:
       "One page, one goal — built to turn traffic from ads into customers, not just visitors.",
     buttonText: "Ask about your project",
@@ -50,7 +50,7 @@ const SERVICE_PLANS: PricingPlan[] = [
   {
     name: "Business Site",
     icon: <Briefcase className="h-5 w-5" strokeWidth={1.75} />,
-    price: "from €250",
+    price: "€500–900",
     description:
       "Multi-page sites with a blog, galleries, and real SEO for operations that have outgrown a single page.",
     buttonText: "Ask about your project",
@@ -69,7 +69,7 @@ const SERVICE_PLANS: PricingPlan[] = [
 
 export function ServicesSection() {
   return (
-    <div className="relative overflow-hidden bg-black py-24 text-white sm:py-32">
+    <div className="relative overflow-hidden py-24 text-white sm:py-32">
       <div className="pointer-events-none absolute inset-0 z-0">
         <div
           className="absolute left-[8%] top-[0%] h-[24rem] w-[24rem] rounded-full bg-purple-600/15 blur-[120px]"

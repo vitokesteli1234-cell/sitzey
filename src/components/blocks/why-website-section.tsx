@@ -39,7 +39,7 @@ const REASONS = [
 
 export function WhyWebsiteSection() {
   return (
-    <div className="relative overflow-hidden bg-black py-24 text-white sm:py-32">
+    <div className="relative overflow-hidden py-24 text-white sm:py-32">
       <div className="pointer-events-none absolute inset-0 z-0">
         <div
           className="absolute left-[65%] top-[-6%] h-[26rem] w-[26rem] rounded-full bg-fuchsia-500/15 blur-[120px]"

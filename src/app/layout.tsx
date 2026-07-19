@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { IntroGate } from "@/components/blocks/intro-context";
+import { ProceduralBackground } from "@/components/blocks/procedural-background";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,6 +30,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ProceduralBackground />
         <IntroGate>{children}</IntroGate>
       </body>
     </html>
