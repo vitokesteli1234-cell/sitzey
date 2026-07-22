@@ -44,6 +44,7 @@ export function StoryAndWorkSection() {
 
       {/* STATS */}
       <section className="relative z-10 container mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
+        <h2 className="sr-only">Sitzey by the numbers</h2>
         <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-3 sm:gap-6 sm:text-left">
           {STATS.map((stat, i) => (
             <Reveal key={stat.label} delay={0.1 * i}>
@@ -54,7 +55,7 @@ export function StoryAndWorkSection() {
                 >
                   {stat.value}
                 </div>
-                <div className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500 sm:text-base">
+                <div className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-400 sm:text-base">
                   {stat.label}
                 </div>
               </div>

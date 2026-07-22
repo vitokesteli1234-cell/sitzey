@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Suspense, lazy } from 'react'
+import Link from 'next/link'
 import { Space_Grotesk } from 'next/font/google'
 import { StoryAndWorkSection } from '@/components/blocks/sitzey-story-and-work'
 import { WhyWebsiteSection } from '@/components/blocks/why-website-section'
@@ -10,6 +11,8 @@ import { ProcessSection } from '@/components/blocks/process-section'
 import { Magnetic } from '@/components/blocks/magnetic'
 import { useIntroReady } from '@/components/blocks/intro-context'
 import { scrollToElementCentered } from '@/components/blocks/smooth-scroll'
+import { MobileNav } from '@/components/blocks/mobile-nav'
+import { cn, focusRing } from '@/lib/utils'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 // Geometric, slightly technical sans for the hero's supporting copy —
@@ -23,7 +26,7 @@ const spaceGrotesk = Space_Grotesk({
 const EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)'
 const EASE_OUT_BACK = 'cubic-bezier(0.34, 1.56, 0.64, 1)'
 
-const NAV_LINKS = [
+export const NAV_LINKS = [
   { href: '#why', label: 'Why' },
   { href: '#services', label: 'Services' },
   { href: '#process', label: 'Process' },
@@ -163,7 +166,10 @@ function Navbar() {
         <Magnetic className="inline-block">
           <a
             href="#top"
-            className="text-sm font-bold uppercase tracking-[0.3em] text-purple-300 transition hover:text-white"
+            className={cn(
+              "text-sm font-bold uppercase tracking-[0.3em] text-purple-300 transition hover:text-white",
+              focusRing
+            )}
             style={{ filter: "drop-shadow(0 0 10px rgba(192,132,252,0.6))" }}
           >
             SITZEY
@@ -177,20 +183,29 @@ function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleSectionNavClick(e, link.href)}
-                className="relative text-sm font-medium text-gray-300 transition duration-200 hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-purple-400 after:transition-all after:duration-300 hover:after:w-full"
+                className={cn(
+                  "relative text-sm font-medium text-gray-300 transition duration-200 hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-purple-400 after:transition-all after:duration-300 hover:after:w-full",
+                  focusRing
+                )}
               >
                 {link.label}
               </a>
             ))}
           </div>
           <Magnetic className="inline-block">
-            <a
+            <Link
               href="/contact"
-              className={`${spaceGrotesk.className} rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg`}
+              className={cn(
+                `${spaceGrotesk.className} rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-base font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white sm:text-lg`,
+                focusRing
+              )}
             >
               Contact
-            </a>
+            </Link>
           </Magnetic>
+          <div className="sm:hidden">
+            <MobileNav links={NAV_LINKS} />
+          </div>
         </div>
       </div>
     </nav>
@@ -221,7 +236,7 @@ export const HeroSection = () => {
     <div id="top" className="relative">
       <Navbar />
 
-      <div className="relative min-h-screen">
+      <div id="main-content" className="relative min-h-screen">
         <div className="absolute inset-0 z-0 pointer-events-auto">
           <HeroSplineBackground />
         </div>

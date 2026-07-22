@@ -1,9 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { Reveal } from "@/components/blocks/scroll-reveal";
 import { Magnetic } from "@/components/blocks/magnetic";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { cn, focusRing } from "@/lib/utils";
 
 export interface PricingPlan {
   name: string;
@@ -45,7 +47,7 @@ export function Pricing({ plans, title, description, eyebrow, id }: PricingProps
           </h2>
         </Reveal>
         <Reveal delay={0.14}>
-          <p className="mb-14 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg">
+          <p className="mb-14 max-w-xl text-base leading-relaxed text-gray-300 sm:text-lg">
             {description}
           </p>
         </Reveal>
@@ -71,16 +73,19 @@ export function Pricing({ plans, title, description, eyebrow, id }: PricingProps
                 <p className="mb-3 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text font-mono text-xl font-bold uppercase tracking-[0.05em] text-transparent">
                   {plan.price}
                 </p>
-                <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-400">
+                <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-300">
                   {plan.description}
                 </p>
                 <Magnetic className="inline-block">
-                  <a
-                    href={plan.href}
-                    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white"
+                  <Link
+                    href={`${plan.href}?type=${encodeURIComponent(plan.name)}`}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-gray-200 backdrop-blur-sm transition duration-200 hover:border-purple-400/60 hover:bg-white/10 hover:text-white",
+                      focusRing
+                    )}
                   >
                     {plan.buttonText}
-                  </a>
+                  </Link>
                 </Magnetic>
               </div>
             </div>

@@ -134,6 +134,18 @@
   html {
     scroll-behavior: auto;
   }
+  /* Freezes the shared @keyframes (fade-in-up, pop-in, glow-pulse,
+     float-slow, spin-slow, blink-cursor) used across every section's
+     background glow blobs and entrance animations. Components that drive
+     motion purely in JS (glowing-effect.tsx's rAF/motion loop) still need
+     their own explicit check — this only covers CSS-driven animation. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes fade-in-up {

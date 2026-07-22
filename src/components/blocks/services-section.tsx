@@ -17,7 +17,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "€300–500",
     description:
       "A clean, fast site with everything a small business actually needs — who you are, what you do, and how to reach you.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about a Starter Site",
     href: "/contact",
   },
   {
@@ -26,7 +26,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "€900–1,800",
     description:
       "A full storefront: product listings, a cart, and card payments wired in from day one.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about an Online Store",
     href: "/contact",
   },
   {
@@ -35,7 +35,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "€700–1,200",
     description:
       "For salons, rentals, and restaurants — a live calendar so people book themselves, no phone tag required.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about a Booking System",
     href: "/contact",
   },
   {
@@ -44,7 +44,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "€250–400",
     description:
       "One page, one goal — built to turn traffic from ads into customers, not just visitors.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about a Landing Page",
     href: "/contact",
   },
   {
@@ -53,7 +53,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "€500–900",
     description:
       "Multi-page sites with a blog, galleries, and real SEO for operations that have outgrown a single page.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about a Business Site",
     href: "/contact",
   },
   {
@@ -62,7 +62,7 @@ const SERVICE_PLANS: PricingPlan[] = [
     price: "quote on request",
     description:
       "Running something from a decade ago? We'll rebuild it modern, mobile-first, and fast — same brand, new site.",
-    buttonText: "Ask about your project",
+    buttonText: "Ask about a Redesign",
     href: "/contact",
   },
 ];

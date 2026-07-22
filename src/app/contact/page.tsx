@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { CursorGlitch } from "@/components/blocks/cursor-glitch";
 import { Magnetic } from "@/components/blocks/magnetic";
 import { ContactMain } from "@/components/blocks/contact-main";
+import { cn, focusRing } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Contact — SITZEY",
-  description: "Get in touch with Sitzey.",
+  title: "Contact",
+  // Verbatim from contact-main.tsx's own response-time line, not new copy.
+  description:
+    "Get in touch with Sitzey. I read every message and typically reply within a few hours.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
@@ -43,7 +48,10 @@ export default function ContactPage() {
         <Magnetic className="inline-block">
           <Link
             href="/"
-            className="text-sm font-bold tracking-[0.3em] text-purple-300 uppercase transition hover:text-white"
+            className={cn(
+              "text-sm font-bold tracking-[0.3em] text-purple-300 uppercase transition hover:text-white",
+              focusRing
+            )}
             style={{ filter: "drop-shadow(0 0 10px rgba(192,132,252,0.6))" }}
           >
             SITZEY
@@ -52,14 +60,16 @@ export default function ContactPage() {
         <Magnetic className="inline-block">
           <Link
             href="/"
-            className="text-sm text-gray-300 transition hover:text-white"
+            className={cn("text-sm text-gray-300 transition hover:text-white", focusRing)}
           >
             ← Back home
           </Link>
         </Magnetic>
       </header>
 
-      <ContactMain />
+      <Suspense fallback={null}>
+        <ContactMain />
+      </Suspense>
     </div>
   );
 }

@@ -57,7 +57,7 @@ export function ProcessSection() {
             </h2>
           </Reveal>
           <Reveal delay={0.14}>
-            <p className="mb-16 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg">
+            <p className="mb-16 max-w-xl text-base leading-relaxed text-gray-300 sm:text-lg">
               No jargon, no ten-step onboarding funnel — just a straight line
               from a message to a working site.
             </p>
@@ -85,7 +85,7 @@ export function ProcessSection() {
                         {step.title}
                       </h3>
                     </div>
-                    <p className="max-w-md text-sm leading-relaxed text-gray-400 sm:text-base">
+                    <p className="max-w-md text-sm leading-relaxed text-gray-300 sm:text-base">
                       {step.body}
                     </p>
                   </div>

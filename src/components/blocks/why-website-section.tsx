@@ -72,7 +72,7 @@ export function WhyWebsiteSection() {
             </h2>
           </Reveal>
           <Reveal delay={0.14}>
-            <p className="mb-14 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg">
+            <p className="mb-14 max-w-xl text-base leading-relaxed text-gray-300 sm:text-lg">
               A website isn&apos;t a nice-to-have anymore — it&apos;s the
               first place people decide whether your business is worth their
               time.
@@ -97,7 +97,7 @@ export function WhyWebsiteSection() {
                     <reason.icon className="h-5 w-5" strokeWidth={1.75} />
                   </div>
                   <h3 className="mb-2 text-lg font-semibold">{reason.title}</h3>
-                  <p className="text-sm leading-relaxed text-gray-400">
+                  <p className="text-sm leading-relaxed text-gray-300">
                     {reason.body}
                   </p>
                 </div>

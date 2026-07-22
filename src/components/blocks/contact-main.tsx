@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Mail, Phone, Clock, Send, ChevronDown } from "lucide-react";
 import { Magnetic } from "@/components/blocks/magnetic";
 import { useIntroReady } from "@/components/blocks/intro-context";
 import { Reveal } from "@/components/blocks/scroll-reveal";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { cn, focusRing } from "@/lib/utils";
 
 const PROJECT_TYPES = [
   "Starter Site",
@@ -68,7 +70,7 @@ function buildMailto(data: FormState) {
   return `mailto:sitzeyco@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-function WhatsAppIcon({ className }: { className?: string }) {
+export function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 448 512" fill="currentColor" className={className} aria-hidden="true">
       <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.7z" />
@@ -81,7 +83,7 @@ const fieldLabel =
 const fieldControl =
   "w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder:text-gray-500 outline-none transition duration-200 focus:border-purple-400/60 focus:bg-white/[0.07] focus:ring-1 focus:ring-purple-400/30";
 
-const CONTACT_CARDS = [
+export const CONTACT_CARDS = [
   {
     href: "mailto:sitzeyco@gmail.com",
     icon: Mail,
@@ -111,14 +113,24 @@ const CONTACT_CARDS = [
 export function ContactMain() {
   const ready = useIntroReady();
   const playState = ready ? "running" : "paused";
+  const searchParams = useSearchParams();
 
-  const [form, setForm] = useState<FormState>({
-    name: "",
-    email: "",
-    projectType: "Not sure yet",
-    budget: "Not sure yet",
-    message: "",
+  const [form, setForm] = useState<FormState>(() => {
+    const requestedType = searchParams.get("type");
+    const projectType =
+      requestedType && PROJECT_TYPES.includes(requestedType)
+        ? requestedType
+        : "Not sure yet";
+    return {
+      name: "",
+      email: "",
+      projectType,
+      budget: "Not sure yet",
+      message: "",
+    };
   });
+  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [submitting, setSubmitting] = useState(false);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -127,10 +139,13 @@ export function ContactMain() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     window.location.href = buildMailto(form);
+    setStatus("sent");
+    setSubmitting(true);
+    window.setTimeout(() => setSubmitting(false), 2500);
   }
 
   return (
-    <main className="relative z-10 flex flex-col items-center px-6 py-20 md:py-28">
+    <main id="main-content" className="relative z-10 flex flex-col items-center px-6 py-20 md:py-28">
       {/* HERO */}
       <div className="flex flex-col items-center text-center">
         <div
@@ -166,14 +181,14 @@ export function ContactMain() {
           Get in touch
         </h1>
         <p
-          className="mb-4 max-w-xl text-base text-gray-300 opacity-80 opacity-0 sm:text-lg"
+          className="mb-4 max-w-xl text-base text-gray-300 opacity-0 sm:text-lg"
           style={{ animation: "fade-in-up 0.8s ease forwards 0.26s", animationPlayState: playState }}
         >
           Need a website for your business? Reach out directly and let&apos;s
           talk about what you&apos;re building — I read every message.
         </p>
         <p
-          className="mb-14 flex items-center gap-2 text-sm text-gray-400 opacity-0 sm:text-base"
+          className="mb-14 flex items-center gap-2 text-sm text-gray-300 opacity-0 sm:text-base"
           style={{ animation: "fade-in-up 0.8s ease forwards 0.34s", animationPlayState: playState }}
         >
           <Clock className="h-4 w-4 flex-none text-purple-300" strokeWidth={1.75} />
@@ -280,7 +295,7 @@ export function ContactMain() {
               />
             </div>
 
-            <p className="mt-4 text-xs leading-relaxed text-gray-500">
+            <p className="mt-4 text-xs leading-relaxed text-gray-400">
               Your info is only used to get back to you about your project —
               nothing else.
             </p>
@@ -288,12 +303,34 @@ export function ContactMain() {
             <Magnetic strength={0.15} className="mt-6 inline-block">
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 px-7 py-3 text-sm font-semibold text-white transition duration-300 hover:shadow-[0_0_40px_-8px_rgba(168,85,247,0.7)]"
+                disabled={submitting}
+                className={cn(
+                  "group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 px-7 py-3 text-sm font-semibold text-white transition duration-300 hover:shadow-[0_0_40px_-8px_rgba(168,85,247,0.7)] disabled:opacity-60",
+                  focusRing
+                )}
               >
                 Send message
                 <Send className="h-4 w-4 transition duration-200 group-hover:translate-x-0.5" strokeWidth={2} />
               </button>
             </Magnetic>
+
+            {status === "sent" && (
+              <p
+                role="status"
+                aria-live="polite"
+                className="mt-4 flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300"
+              >
+                <span className="relative flex h-2 w-2 flex-none">
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                Your email app should now be open with your message ready to
+                send. If nothing happened, email us directly at{" "}
+                <a href="mailto:sitzeyco@gmail.com" className={cn("underline", focusRing)}>
+                  sitzeyco@gmail.com
+                </a>
+                .
+              </p>
+            )}
           </form>
         </div>
       </Reveal>
@@ -301,7 +338,7 @@ export function ContactMain() {
       {/* SECONDARY CONTACT OPTIONS */}
       <div className="mt-16 w-full max-w-2xl text-center">
         <Reveal>
-          <p className="mb-6 text-sm text-gray-400">
+          <p className="mb-6 text-sm text-gray-300">
             Prefer to reach out directly?
           </p>
         </Reveal>
@@ -320,7 +357,10 @@ export function ContactMain() {
                 href={card.href}
                 target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="group relative flex h-full flex-col items-center gap-3 overflow-hidden rounded-2xl border border-purple-500/30 bg-white/5 px-4 py-8 backdrop-blur-md transition duration-300 hover:-translate-y-1.5 hover:border-purple-400/70 hover:bg-white/10 hover:shadow-[0_0_50px_-8px_rgba(168,85,247,0.7)]"
+                className={cn(
+                  "group relative flex h-full flex-col items-center gap-3 overflow-hidden rounded-2xl border border-purple-500/30 bg-white/5 px-4 py-8 backdrop-blur-md transition duration-300 hover:-translate-y-1.5 hover:border-purple-400/70 hover:bg-white/10 hover:shadow-[0_0_50px_-8px_rgba(168,85,247,0.7)]",
+                  focusRing
+                )}
               >
                 <span className="absolute inset-x-0 top-0 h-[2px] scale-x-0 bg-gradient-to-r from-transparent via-purple-400 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 <span className="relative flex h-14 w-14 items-center justify-center">
@@ -363,7 +403,7 @@ export function ContactMain() {
                 <h3 className="mb-2 text-base font-semibold text-white sm:text-lg">
                   {item.q}
                 </h3>
-                <p className="text-sm leading-relaxed text-gray-400 sm:text-base">
+                <p className="text-sm leading-relaxed text-gray-300 sm:text-base">
                   {item.a}
                 </p>
               </div>
